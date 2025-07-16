@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Certificados Modulares – DSI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    select, .content {
+      width: 100%;
+      margin: 20px 0;
+      padding: 10px;
+      font-size: 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    ol {
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 15px;
+    }
+    ul {
+      list-style-type: square;
+      margin-left: 20px;
+    }
+    strong {
+      color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📢 Certificados Modulares – DSI</h1>
+  <p>Selecciona el ciclo que estás cursando para ver los pasos del trámite correspondiente:</p>
+
+  <select id="ciclo" onchange="mostrarInstrucciones()">
+    <option value="">-- Selecciona tu ciclo --</option>
+    <option value="2">2° Ciclo</option>
+    <option value="4">4° Ciclo</option>
+    <option value="6">6° Ciclo</option>
+  </select>
+
+  <div id="resultado" class="content"></div>
+
+  <script>
+    function mostrarInstrucciones() {
+      const ciclo = document.getElementById('ciclo').value;
+      const resultado = document.getElementById('resultado');
+
+      if (!ciclo) {
+        resultado.innerHTML = '';
+        return;
+      }
+
+      resultado.innerHTML = `
+        <div class="card">
+          <h2>🧾 Trámite de Certificado Modular – Ciclo ${ciclo}°</h2>
+          <ol>
+            <li><strong>Paso 1: Realiza tus prácticas</strong><br>
+              Realiza tus prácticas en el curso: <em>Experiencias Formativas en Situaciones Reales de Trabajo (ESRT)</em>.<br>
+              Presenta tu informe de prácticas.<br>
+              💵 Kit de prácticas: <strong>S/ 30.00</strong>.
+            </li>
+            <li><strong>Paso 2: Verifica tu nota</strong><br>
+              Debes tener la nota publicada en el curso <strong>ESRT</strong>.
+            </li>
+            <li><strong>Paso 3: Reúne los documentos</strong>
+              <ul>
+                <li>Nota publicada</li>
+                <li>Ficha de seguimiento:<br>
+                  - Alumno regular: <strong>S/ 5.00</strong><br>
+                  - Egresado: <strong>S/ 20.00</strong>
+                </li>
+                <li>Pago modular:<br>
+                  - Dentro del ciclo: <strong>S/ 40.00</strong><br>
+                  - Fuera del ciclo (aún alumno): <strong>S/ 80.00</strong><br>
+                  - Egresado: <strong>S/ 100.00</strong>
+                </li>
+                <li>Foto tamaño pasaporte <strong>(papel mate)</strong></li>
+                <li>Formulario Único de Trámite (FUT)</li>
+                <li>Todos los documentos en una <strong>mica</strong></li>
+              </ul>
+            </li>
+            <li><strong>Paso 4: Entrega y espera</strong><br>
+              Entrega los documentos en la oficina correspondiente.<br>
+              ⏳ Tiempo de entrega: <strong>aproximadamente 10 días hábiles</strong>.
+            </li>
+          </ol>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
