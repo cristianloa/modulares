@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f0f4f8;
+      background: #eef3f7;
       margin: 0;
       padding: 30px;
       max-width: 900px;
@@ -24,15 +24,16 @@
       font-size: 1.1rem;
     }
 
-    .botones-ciclos {
+    .botones-ciclos, .tipo-estudiante {
       display: flex;
       justify-content: center;
       gap: 15px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
     }
 
-    .btn-ciclo {
-      padding: 15px 25px;
+    .btn-ciclo, .btn-tipo {
+      padding: 12px 20px;
       font-size: 1rem;
       border: none;
       border-radius: 10px;
@@ -42,20 +43,20 @@
       transition: background-color 0.3s ease;
     }
 
-    .btn-ciclo:hover {
-      background-color: #2980b9;
+    .btn-ciclo:hover, .btn-tipo:hover {
+      background-color: #2c80b4;
     }
 
     .card {
-      background: white;
       border-radius: 10px;
       padding: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      color: white;
+      margin-top: 20px;
     }
 
-    h2 {
-      color: #1a5276;
-    }
+    .ciclo-2 { background-color: #16a085; }
+    .ciclo-4 { background-color: #8e44ad; }
+    .ciclo-6 { background-color: #e67e22; }
 
     ol {
       padding-left: 20px;
@@ -71,7 +72,7 @@
     }
 
     strong {
-      color: #2980b9;
+      color: #ffeaa7;
     }
 
     .footer {
@@ -85,12 +86,17 @@
 <body>
 
   <h1>📢 Certificados Modulares – DSI</h1>
-  <p class="intro">Haz clic en tu ciclo actual para conocer los pasos del trámite:</p>
+  <p class="intro">Selecciona tu ciclo y si eres alumno regular o egresado para ver la información específica:</p>
 
   <div class="botones-ciclos">
-    <button class="btn-ciclo" onclick="mostrarInstrucciones(2)">2° Ciclo</button>
-    <button class="btn-ciclo" onclick="mostrarInstrucciones(4)">4° Ciclo</button>
-    <button class="btn-ciclo" onclick="mostrarInstrucciones(6)">6° Ciclo</button>
+    <button class="btn-ciclo" onclick="seleccionarCiclo(2)">2° Ciclo</button>
+    <button class="btn-ciclo" onclick="seleccionarCiclo(4)">4° Ciclo</button>
+    <button class="btn-ciclo" onclick="seleccionarCiclo(6)">6° Ciclo</button>
+  </div>
+
+  <div class="tipo-estudiante">
+    <button class="btn-tipo" onclick="seleccionarTipo('regular')">Alumno Regular</button>
+    <button class="btn-tipo" onclick="seleccionarTipo('egresado')">Egresado</button>
   </div>
 
   <div id="resultado" class="content"></div>
@@ -100,41 +106,61 @@
   </div>
 
   <script>
-    function mostrarInstrucciones(ciclo) {
+    let cicloSeleccionado = null;
+    let tipoSeleccionado = null;
+
+    function seleccionarCiclo(ciclo) {
+      cicloSeleccionado = ciclo;
+      mostrarContenido();
+    }
+
+    function seleccionarTipo(tipo) {
+      tipoSeleccionado = tipo;
+      mostrarContenido();
+    }
+
+    function mostrarContenido() {
       const resultado = document.getElementById('resultado');
+      if (!cicloSeleccionado || !tipoSeleccionado) {
+        resultado.innerHTML = '';
+        return;
+      }
+
+      let claseCiclo = `ciclo-${cicloSeleccionado}`;
+      let esRegular = tipoSeleccionado === 'regular';
+
+      let ficha = esRegular ? 'S/ 5.00' : 'S/ 20.00';
+      let pago = esRegular
+        ? (cicloSeleccionado === 2 || cicloSeleccionado === 4 || cicloSeleccionado === 6 ? 'S/ 40.00 (dentro del ciclo)<br> S/ 80.00 (fuera del ciclo)' : 'S/ 80.00')
+        : 'S/ 100.00';
+
+      let titulo = `Trámite de Certificado Modular – Ciclo ${cicloSeleccionado}° (${esRegular ? 'Alumno Regular' : 'Egresado'})`;
 
       resultado.innerHTML = `
-        <div class="card">
-          <h2>🧾 Trámite de Certificado Modular – Ciclo ${ciclo}°</h2>
+        <div class="card ${claseCiclo}">
+          <h2>🧾 ${titulo}</h2>
           <ol>
             <li><strong>Paso 1: Realiza tus prácticas</strong><br>
-              Realiza tus prácticas en el curso: <em>Experiencias Formativas en Situaciones Reales de Trabajo (ESRT)</em>.<br>
-              Presenta tu informe de prácticas.<br>
+              Curso: <em>Experiencias Formativas en Situaciones Reales de Trabajo (ESRT)</em>.<br>
+              Informe de prácticas.<br>
               💵 Kit de prácticas: <strong>S/ 30.00</strong>.
             </li>
             <li><strong>Paso 2: Verifica tu nota</strong><br>
-              Debes tener la nota publicada en el curso <strong>ESRT</strong>.
+              Nota publicada en el curso <strong>ESRT</strong>.
             </li>
             <li><strong>Paso 3: Reúne los documentos</strong>
               <ul>
                 <li>Nota publicada</li>
-                <li>Ficha de seguimiento:<br>
-                  - Alumno regular: <strong>S/ 5.00</strong><br>
-                  - Egresado: <strong>S/ 20.00</strong>
-                </li>
-                <li>Pago modular:<br>
-                  - Dentro del ciclo: <strong>S/ 40.00</strong><br>
-                  - Fuera del ciclo (aún alumno): <strong>S/ 80.00</strong><br>
-                  - Egresado: <strong>S/ 100.00</strong>
-                </li>
+                <li>Ficha de seguimiento: <strong>${ficha}</strong></li>
+                <li>Pago modular: <br>${pago}</li>
                 <li>Foto tamaño pasaporte <strong>(papel mate)</strong></li>
                 <li>Formulario Único de Trámite (FUT)</li>
-                <li>Todos los documentos en una <strong>mica</strong></li>
+                <li>Todo en una <strong>mica</strong></li>
               </ul>
             </li>
             <li><strong>Paso 4: Entrega y espera</strong><br>
               Entrega los documentos en la oficina correspondiente.<br>
-              ⏳ Tiempo de entrega: <strong>aproximadamente 10 días hábiles</strong>.
+              ⏳ Entrega aproximada: <strong>10 días hábiles</strong>.
             </li>
           </ol>
         </div>
