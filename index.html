@@ -5,66 +5,103 @@
   <title>Certificados Modulares – DSI</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
-      max-width: 800px;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 30px;
+      max-width: 900px;
       margin: auto;
     }
+
     h1 {
       text-align: center;
       color: #2c3e50;
     }
-    select, .content {
-      width: 100%;
-      margin: 20px 0;
-      padding: 10px;
-      font-size: 1rem;
+
+    .intro {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
     }
+
+    .botones-ciclos {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .btn-ciclo {
+      padding: 15px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #3498db;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-ciclo:hover {
+      background-color: #2980b9;
+    }
+
     .card {
       background: white;
       border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+
+    h2 {
+      color: #1a5276;
+    }
+
     ol {
       padding-left: 20px;
     }
+
     li {
       margin-bottom: 15px;
     }
+
     ul {
       list-style-type: square;
       margin-left: 20px;
     }
+
     strong {
       color: #2980b9;
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #555;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
   <h1>📢 Certificados Modulares – DSI</h1>
-  <p>Selecciona el ciclo que estás cursando para ver los pasos del trámite correspondiente:</p>
+  <p class="intro">Haz clic en tu ciclo actual para conocer los pasos del trámite:</p>
 
-  <select id="ciclo" onchange="mostrarInstrucciones()">
-    <option value="">-- Selecciona tu ciclo --</option>
-    <option value="2">2° Ciclo</option>
-    <option value="4">4° Ciclo</option>
-    <option value="6">6° Ciclo</option>
-  </select>
+  <div class="botones-ciclos">
+    <button class="btn-ciclo" onclick="mostrarInstrucciones(2)">2° Ciclo</button>
+    <button class="btn-ciclo" onclick="mostrarInstrucciones(4)">4° Ciclo</button>
+    <button class="btn-ciclo" onclick="mostrarInstrucciones(6)">6° Ciclo</button>
+  </div>
 
   <div id="resultado" class="content"></div>
 
-  <script>
-    function mostrarInstrucciones() {
-      const ciclo = document.getElementById('ciclo').value;
-      const resultado = document.getElementById('resultado');
+  <div class="footer">
+    Escuela Superior Khipu – Departamento de Sistemas e Inteligencia Artificial
+  </div>
 
-      if (!ciclo) {
-        resultado.innerHTML = '';
-        return;
-      }
+  <script>
+    function mostrarInstrucciones(ciclo) {
+      const resultado = document.getElementById('resultado');
 
       resultado.innerHTML = `
         <div class="card">
