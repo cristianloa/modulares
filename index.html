@@ -1,164 +1,163 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Certificados Modulares – DSI</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Información de Prácticas y Certificados</title>
   <style>
+    :root {
+      --color-2: #e3f2fd;
+      --color-4: #fce4ec;
+      --color-6: #e8f5e9;
+      --color-egresado: #fff3e0;
+      --primary: #1565c0;
+      --selected: #0d47a1;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #eef3f7;
       margin: 0;
-      padding: 30px;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .container {
+      padding: 1rem;
       max-width: 900px;
       margin: auto;
     }
 
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
-
-    .intro {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 1.1rem;
-    }
-
-    .botones-ciclos {
+    .buttons {
       display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 30px;
       flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
-    .btn-ciclo {
-      padding: 12px 20px;
-      font-size: 1rem;
+    .buttons button {
+      padding: 0.8rem 1.5rem;
       border: none;
       border-radius: 10px;
+      font-size: 1rem;
       cursor: pointer;
-      background-color: #3498db;
+      transition: all 0.3s ease;
+      background-color: #ccc;
+    }
+
+    .buttons button.selected {
+      background-color: var(--selected);
       color: white;
-      transition: background-color 0.3s ease;
     }
 
-    .btn-ciclo:hover {
-      background-color: #2c80b4;
-    }
-
-    .card {
+    .info-box {
       border-radius: 10px;
-      padding: 25px;
-      color: white;
-      margin-top: 20px;
+      padding: 1.5rem;
+      display: none;
+      animation: fadeIn 0.4s ease;
     }
 
-    .ciclo-2 { background-color: #16a085; }
-    .ciclo-4 { background-color: #8e44ad; }
-    .ciclo-6 { background-color: #e67e22; }
-    .egresado { background-color: #2c3e50; }
+    .info-2 { background-color: var(--color-2); }
+    .info-4 { background-color: var(--color-4); }
+    .info-6 { background-color: var(--color-6); }
+    .info-egresado { background-color: var(--color-egresado); }
 
-    ol {
-      padding-left: 20px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    li {
-      margin-bottom: 15px;
-    }
-
-    ul {
-      list-style-type: square;
-      margin-left: 20px;
-    }
-
-    strong {
-      color: #ffeaa7;
-    }
-
-    .footer {
-      margin-top: 40px;
-      text-align: center;
-      color: #555;
-      font-size: 0.9rem;
+    @media screen and (max-width: 600px) {
+      .buttons {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>📢 Certificados Modulares – DSI</h1>
-  <p class="intro">Selecciona tu situación actual para conocer los pasos del trámite:</p>
+  <header>
+    <h1>📢 Información de Prácticas y Certificados</h1>
+  </header>
 
-  <div class="botones-ciclos">
-    <button class="btn-ciclo" onclick="mostrarInfo(2)">2° Ciclo</button>
-    <button class="btn-ciclo" onclick="mostrarInfo(4)">4° Ciclo</button>
-    <button class="btn-ciclo" onclick="mostrarInfo(6)">6° Ciclo</button>
-    <button class="btn-ciclo" onclick="mostrarInfo('egresado')">Egresado</button>
-  </div>
+  <div class="container">
+    <div class="buttons">
+      <button onclick="mostrarInfo('2')" id="btn2">2° Ciclo</button>
+      <button onclick="mostrarInfo('4')" id="btn4">4° Ciclo</button>
+      <button onclick="mostrarInfo('6')" id="btn6">6° Ciclo</button>
+      <button onclick="mostrarInfo('egresado')" id="btnEgresado">Egresado</button>
+    </div>
 
-  <div id="resultado" class="content"></div>
+    <div id="info2" class="info-box info-2">
+      <h2>🧑‍💻 Prácticas – 2° Ciclo</h2>
+      <ul>
+        <li>Realizar prácticas en empresa o institución (mínimo 150 horas).</li>
+        <li>Presentar informe con evidencias (Kit de prácticas: S/ 30.00).</li>
+        <li>📘 Tener nota publicada en el curso ESRT.</li>
+        <li>Ficha de seguimiento (S/ 5.00).</li>
+        <li>Trámite modular dentro del ciclo: S/ 40.00.</li>
+        <li>📷 Foto tamaño pasaporte (papel mate).</li>
+        <li>Formulario Único de Trámite (FUT).</li>
+      </ul>
+    </div>
 
-  <div class="footer">
-    Khipu – DSI
+    <div id="info4" class="info-box info-4">
+      <h2>🔧 Prácticas – 4° Ciclo</h2>
+      <ul>
+        <li>Prácticas en área técnica relacionada a tu carrera.</li>
+        <li>Informe completo + Kit de prácticas (S/ 30.00).</li>
+        <li>📘 Nota en el curso ESRT obligatoria.</li>
+        <li>Ficha de seguimiento (S/ 5.00).</li>
+        <li>Trámite modular dentro del ciclo: S/ 40.00.</li>
+        <li>📷 Foto tamaño pasaporte (papel mate).</li>
+        <li>Formulario Único de Trámite (FUT).</li>
+      </ul>
+    </div>
+
+    <div id="info6" class="info-box info-6">
+      <h2>🎓 Prácticas – 6° Ciclo</h2>
+      <ul>
+        <li>Última práctica antes del egreso.</li>
+        <li>Informe detallado con evidencias (Kit: S/ 30.00).</li>
+        <li>📘 Nota ESRT publicada obligatoriamente.</li>
+        <li>Ficha de seguimiento (S/ 5.00).</li>
+        <li>Trámite modular dentro del ciclo: S/ 40.00.</li>
+        <li>📷 Foto tamaño pasaporte (papel mate).</li>
+        <li>Formulario Único de Trámite (FUT).</li>
+      </ul>
+    </div>
+
+    <div id="infoegresado" class="info-box info-egresado">
+      <h2>📜 Trámite para Egresados</h2>
+      <ul>
+        <li>Debe haber concluido el 6° ciclo.</li>
+        <li>Informe de prácticas por cada ciclo (Kit por S/ 30.00 c/u).</li>
+        <li>📘 Nota publicada en cada ESRT correspondiente.</li>
+        <li>Ficha de seguimiento: S/ 20.00 por cada ciclo.</li>
+        <li>Trámite modular: S/ 100.00 por cada ciclo.</li>
+        <li>📷 Foto tamaño pasaporte (papel mate) por certificado.</li>
+        <li>Formulario Único de Trámite (FUT).</li>
+        <li>⏳ Tiempo de entrega: 10 días hábiles aprox.</li>
+      </ul>
+    </div>
   </div>
 
   <script>
-    function mostrarInfo(opcion) {
-      const resultado = document.getElementById('resultado');
-      let html = '';
-      let clase = '';
-      let titulo = '';
-      let tipo = '';
-      let ficha = '';
-      let pago = '';
-
-      if (opcion === 'egresado') {
-        clase = 'egresado';
-        titulo = 'Trámite de Certificados Modulares – Egresado';
-        tipo = 'Egresado';
-        ficha = 'S/ 20.00';
-        pago = 'S/ 100.00 por cada módulo (2°, 4° y 6°)';
-      } else {
-        clase = 'ciclo-' + opcion;
-        titulo = `Trámite de Certificado Modular – Ciclo ${opcion}°`;
-        tipo = 'Alumno Regular';
-        ficha = 'S/ 5.00';
-        pago = 'S/ 40.00 (dentro del ciclo) / S/ 80.00 (fuera del ciclo)';
-      }
-
-      html = `
-        <div class="card ${clase}">
-          <h2>🧾 ${titulo}</h2>
-          <ol>
-            <li><strong>Paso 1: Realiza tus prácticas</strong><br>
-              Curso: <em>Experiencias Formativas en Situaciones Reales de Trabajo (ESRT)</em>.<br>
-              Presenta tu informe de prácticas.<br>
-              💵 Kit de prácticas: <strong>S/ 30.00</strong>.
-            </li>
-            <li><strong>Paso 2: Verifica tu nota</strong><br>
-              Nota publicada en el curso <strong>ESRT</strong>.
-            </li>
-            <li><strong>Paso 3: Reúne los documentos</strong>
-              <ul>
-                <li>Nota publicada</li>
-                <li>Ficha de seguimiento: <strong>${ficha}</strong></li>
-                <li>Pago por certificado modular: <strong>${pago}</strong></li>
-                <li>Foto tamaño pasaporte <strong>(papel mate)</strong></li>
-                <li>Formulario Único de Trámite (FUT)</li>
-                <li>Todos los documentos en una <strong>mica</strong></li>
-              </ul>
-            </li>
-            <li><strong>Paso 4: Entrega y espera</strong><br>
-              Entrega los documentos en la oficina correspondiente.<br>
-              ⏳ Entrega aproximada: <strong>10 días hábiles</strong>.
-            </li>
-          </ol>
-        </div>
-      `;
-
-      resultado.innerHTML = html;
+    function mostrarInfo(ciclo) {
+      const secciones = ['2', '4', '6', 'egresado'];
+      secciones.forEach(sec => {
+        document.getElementById('info' + sec).style.display = (sec === ciclo) ? 'block' : 'none';
+        document.getElementById('btn' + (sec === 'egresado' ? 'Egresado' : sec)).classList.toggle('selected', sec === ciclo);
+      });
     }
   </script>
-
 </body>
 </html>
