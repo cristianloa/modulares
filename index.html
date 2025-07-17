@@ -1,193 +1,192 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Certificados Modulares – DSI</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certificados Modulares - DSI</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #eef3f7;
+      background-color: #f0f4f8;
       margin: 0;
-      padding: 30px;
-      max-width: 900px;
-      margin: auto;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
 
     h1 {
-      text-align: center;
-      color: #2c3e50;
+      color: #1a1a1a;
+      margin-top: 30px;
     }
 
-    .intro {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 1.1rem;
-    }
-
-    .botones-ciclos {
+    .selector {
+      margin: 20px 0;
       display: flex;
-      justify-content: center;
       gap: 15px;
-      margin-bottom: 30px;
       flex-wrap: wrap;
     }
 
-    .btn-ciclo {
+    .selector button {
       padding: 12px 20px;
       font-size: 1rem;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      background-color: #3498db;
-      color: white;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s, transform 0.2s;
     }
 
-    .btn-ciclo:hover {
-      background-color: #2c80b4;
+    .selector button:hover {
+      transform: scale(1.05);
     }
 
-    .btn-ciclo.activo {
-      background-color: #1abc9c;
-      box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.3);
+    .selector .ciclo2 {
+      background-color: #c6f6d5;
+      color: #22543d;
     }
 
-    .card {
-      border-radius: 10px;
+    .selector .ciclo4 {
+      background-color: #bee3f8;
+      color: #2a4365;
+    }
+
+    .selector .ciclo6 {
+      background-color: #fbd38d;
+      color: #744210;
+    }
+
+    .selector .egresado {
+      background-color: #fed7e2;
+      color: #702459;
+    }
+
+    .content {
+      background-color: white;
+      width: 90%;
+      max-width: 800px;
       padding: 25px;
-      color: white;
-      margin-top: 20px;
+      margin-bottom: 40px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      display: none;
     }
 
-    .ciclo-2 { background-color: #16a085; }
-    .ciclo-4 { background-color: #8e44ad; }
-    .ciclo-6 { background-color: #e67e22; }
-    .egresado { background-color: #2c3e50; }
-
-    ol {
-      padding-left: 20px;
+    .visible {
+      display: block;
+      animation: fadeIn 0.4s ease-in-out;
     }
 
-    li {
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .title {
+      font-weight: bold;
       margin-bottom: 15px;
+      font-size: 1.2rem;
     }
 
     ul {
-      list-style-type: square;
-      margin-left: 20px;
+      padding-left: 20px;
     }
 
-    strong {
-      color: #ffeaa7;
-    }
-
-    .footer {
-      margin-top: 40px;
-      text-align: center;
-      color: #555;
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 600px) {
-      .btn-ciclo {
-        width: 100%;
-        margin-bottom: 10px;
-        text-align: center;
-      }
-
-      .botones-ciclos {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      body {
-        padding: 20px;
-      }
+    .promo {
+      font-weight: bold;
+      color: #2f855a;
+      margin-top: 15px;
     }
   </style>
 </head>
 <body>
+  <h1>📢 Certificados Modulares y Prácticas - DSI</h1>
 
-  <h1>📢 Certificados Modulares – DSI</h1>
-  <p class="intro">Selecciona tu situación actual para conocer los pasos del trámite:</p>
-
-  <div class="botones-ciclos">
-    <button class="btn-ciclo" onclick="mostrarInfo(this, 2)">2° Ciclo</button>
-    <button class="btn-ciclo" onclick="mostrarInfo(this, 4)">4° Ciclo</button>
-    <button class="btn-ciclo" onclick="mostrarInfo(this, 6)">6° Ciclo</button>
-    <button class="btn-ciclo" onclick="mostrarInfo(this, 'egresado')">Egresado</button>
+  <div class="selector">
+    <button class="ciclo2" onclick="mostrarContenido('ciclo2')">🎁 2° Ciclo</button>
+    <button class="ciclo4" onclick="mostrarContenido('ciclo4')">4° Ciclo</button>
+    <button class="ciclo6" onclick="mostrarContenido('ciclo6')">6° Ciclo</button>
+    <button class="egresado" onclick="mostrarContenido('egresado')">🎓 Egresado</button>
   </div>
 
-  <div id="resultado" class="content"></div>
-
-  <div class="footer">
-    Escuela Superior Khipu – Departamento de Sistemas e Inteligencia Artificial
-  </div>
+  <div id="contenido" class="content"></div>
 
   <script>
-    function mostrarInfo(boton, opcion) {
-      const resultado = document.getElementById('resultado');
-      const botones = document.querySelectorAll('.btn-ciclo');
+    const contenido = document.getElementById("contenido");
 
-      // Resetear clase activa
-      botones.forEach(btn => btn.classList.remove('activo'));
-      boton.classList.add('activo');
+    const data = {
+      ciclo2: `
+        <div class="title">🧾 Requisitos para 2° Ciclo:</div>
+        <ul>
+          <li>Realizar prácticas del ciclo y cumplir con las horas requeridas.</li>
+          <li>Presentar el informe (Kit de prácticas: <strong>S/ 30.00</strong>).</li>
+          <li>Tener la nota publicada en el curso de ESRT.</li>
+          <li>Ficha de seguimiento: <strong>S/ 5.00</strong></li>
+          <li>Trámite modular dentro del ciclo: <strong>S/ 40.00</strong></li>
+          <li>Foto tamaño pasaporte (mate).</li>
+          <li>Formulario Único de Trámite (FUT).</li>
+          <li>Presentar todo en mica.</li>
+        </ul>
+        <div class="promo">🎁 ¡Promoción especial para alumnos del 2° ciclo! Consulta en Secretaría Académica.</div>
+        <p><strong>⏳ Tiempo de entrega:</strong> 10 días hábiles.</p>
+      `,
+      ciclo4: `
+        <div class="title">📘 Requisitos para 4° Ciclo:</div>
+        <ul>
+          <li>Realizar prácticas y cumplir con las horas requeridas.</li>
+          <li>Presentar el informe (Kit de prácticas: <strong>S/ 30.00</strong>).</li>
+          <li>Nota publicada en el curso ESRT.</li>
+          <li>Ficha de seguimiento: <strong>S/ 5.00</strong></li>
+          <li>Trámite modular dentro del ciclo: <strong>S/ 40.00</strong></li>
+          <li>Fotografía tamaño pasaporte (mate).</li>
+          <li>Formulario Único de Trámite (FUT).</li>
+          <li>Presentar todo en mica.</li>
+        </ul>
+        <p><strong>⏳ Tiempo de entrega:</strong> 10 días hábiles.</p>
+      `,
+      ciclo6: `
+        <div class="title">📗 Requisitos para 6° Ciclo:</div>
+        <ul>
+          <li>Finalizar todas las prácticas del programa.</li>
+          <li>Presentar el informe final (Kit de prácticas: <strong>S/ 30.00</strong>).</li>
+          <li>Nota publicada en ESRT.</li>
+          <li>Ficha de seguimiento: <strong>S/ 5.00</strong></li>
+          <li>Trámite modular dentro del ciclo: <strong>S/ 40.00</strong></li>
+          <li>Foto tamaño pasaporte (mate).</li>
+          <li>Formulario Único de Trámite (FUT).</li>
+          <li>Presentar todo en mica.</li>
+        </ul>
+        <p><strong>⏳ Tiempo de entrega:</strong> 10 días hábiles.</p>
+      `,
+      egresado: `
+        <div class="title">🎓 Requisitos para Egresados:</div>
+        <ul>
+          <li>Haber culminado todos los ciclos y prácticas.</li>
+          <li>Informe completo (Kit de prácticas: <strong>S/ 30.00</strong>).</li>
+          <li>Nota publicada en ESRT.</li>
+          <li>Ficha de seguimiento: <strong>S/ 20.00</strong></li>
+          <li>Trámite modular como egresado: <strong>S/ 100.00</strong></li>
+          <li>Fotografía tamaño pasaporte (mate).</li>
+          <li>Formulario Único de Trámite (FUT).</li>
+          <li>Presentar todo en mica.</li>
+        </ul>
+        <p><strong>⏳ Tiempo de entrega:</strong> 10 días hábiles.</p>
+      `
+    };
 
-      let html = '';
-      let clase = '';
-      let titulo = '';
-      let tipo = '';
-      let ficha = '';
-      let pago = '';
+    function mostrarContenido(ciclo) {
+      contenido.innerHTML = data[ciclo];
+      contenido.classList.add("visible");
 
-      if (opcion === 'egresado') {
-        clase = 'egresado';
-        titulo = 'Trámite de Certificados Modulares – Egresado';
-        tipo = 'Egresado';
-        ficha = 'S/ 20.00';
-        pago = 'S/ 100.00 por cada módulo (2°, 4° y 6°)';
-      } else {
-        clase = 'ciclo-' + opcion;
-        titulo = `Trámite de Certificado Modular – Ciclo ${opcion}°`;
-        tipo = 'Alumno Regular';
-        ficha = 'S/ 5.00';
-        pago = 'S/ 40.00 (dentro del ciclo) / S/ 80.00 (fuera del ciclo)';
-      }
-
-      html = `
-        <div class="card ${clase}">
-          <h2>🧾 ${titulo}</h2>
-          <ol>
-            <li><strong>Paso 1: Realiza tus prácticas</strong><br>
-              Curso: <em>Experiencias Formativas en Situaciones Reales de Trabajo (ESRT)</em>.<br>
-              Presenta tu informe de prácticas.<br>
-              💵 Kit de prácticas: <strong>S/ 30.00</strong>.
-            </li>
-            <li><strong>Paso 2: Verifica tu nota</strong><br>
-              Nota publicada en el curso <strong>ESRT</strong>.
-            </li>
-            <li><strong>Paso 3: Reúne los documentos</strong>
-              <ul>
-                <li>Nota publicada</li>
-                <li>Ficha de seguimiento: <strong>${ficha}</strong></li>
-                <li>Pago por certificado modular: <strong>${pago}</strong></li>
-                <li>Foto tamaño pasaporte <strong>(papel mate)</strong></li>
-                <li>Formulario Único de Trámite (FUT)</li>
-                <li>Todos los documentos en una <strong>mica</strong></li>
-              </ul>
-            </li>
-            <li><strong>Paso 4: Entrega y espera</strong><br>
-              Entrega los documentos en la oficina correspondiente.<br>
-              ⏳ Entrega aproximada: <strong>10 días hábiles</strong>.
-            </li>
-          </ol>
-        </div>
-      `;
-
-      resultado.innerHTML = html;
+      // Cambiar fondo del contenido según el ciclo
+      const fondo = {
+        ciclo2: '#f0fff4',
+        ciclo4: '#ebf8ff',
+        ciclo6: '#fffaf0',
+        egresado: '#fff5f7'
+      };
+      contenido.style.backgroundColor = fondo[ciclo];
     }
   </script>
-
 </body>
 </html>
