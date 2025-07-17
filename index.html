@@ -3,189 +3,210 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Certificados Modulares - DSI</title>
+  <title>Certificado Modular – DSI</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f4f8;
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
+      background-color: #f4f4f4;
     }
 
-    h1 {
-      color: #1a1a1a;
-      margin-top: 30px;
+    header {
+      background-color: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 1.2rem;
+      font-size: 1.3rem;
     }
 
-    .selector {
-      margin: 20px 0;
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .button-group {
       display: flex;
-      gap: 15px;
       flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
     }
 
-    .selector button {
-      padding: 12px 20px;
-      font-size: 1rem;
+    .btn {
+      padding: 0.8rem 1.4rem;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: 0.3s;
     }
 
-    .selector button:hover {
+    .btn:hover {
       transform: scale(1.05);
     }
 
-    .selector .ciclo2 {
-      background-color: #c6f6d5;
-      color: #22543d;
+    .btn-2 {
+      background-color: #16a34a;
+      color: white;
     }
 
-    .selector .ciclo4 {
-      background-color: #bee3f8;
-      color: #2a4365;
+    .btn-4 {
+      background-color: #3b82f6;
+      color: white;
     }
 
-    .selector .ciclo6 {
-      background-color: #fbd38d;
-      color: #744210;
+    .btn-6 {
+      background-color: #7c3aed;
+      color: white;
     }
 
-    .selector .egresado {
-      background-color: #fed7e2;
-      color: #702459;
+    .btn-egresado {
+      background-color: #f97316;
+      color: white;
     }
 
-    .content {
-      background-color: white;
-      width: 90%;
-      max-width: 800px;
-      padding: 25px;
-      margin-bottom: 40px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      display: none;
+    .info-box {
+      padding: 1rem;
+      border-radius: 8px;
+      line-height: 1.6;
     }
 
-    .visible {
-      display: block;
-      animation: fadeIn 0.4s ease-in-out;
+    .bg-2 {
+      background-color: #dcfce7;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .bg-4 {
+      background-color: #dbeafe;
     }
 
-    .title {
-      font-weight: bold;
-      margin-bottom: 15px;
+    .bg-6 {
+      background-color: #ede9fe;
+    }
+
+    .bg-egresado {
+      background-color: #ffedd5;
+    }
+
+    .icon {
       font-size: 1.2rem;
+      margin-right: 5px;
     }
 
     ul {
-      padding-left: 20px;
+      margin-top: 0.5rem;
+      margin-left: 1.2rem;
     }
 
-    .promo {
-      font-weight: bold;
-      color: #2f855a;
-      margin-top: 15px;
+    ul li {
+      margin-bottom: 0.5rem;
     }
   </style>
 </head>
 <body>
-  <h1>📢 Certificados Modulares y Prácticas - DSI</h1>
 
-  <div class="selector">
-    <button class="ciclo2" onclick="mostrarContenido('ciclo2')">🎁 2° Ciclo</button>
-    <button class="ciclo4" onclick="mostrarContenido('ciclo4')">4° Ciclo</button>
-    <button class="ciclo6" onclick="mostrarContenido('ciclo6')">6° Ciclo</button>
-    <button class="egresado" onclick="mostrarContenido('egresado')">🎓 Egresado</button>
+  <header>📢 Información sobre Prácticas y Certificados Modulares – DSI</header>
+
+  <div class="container">
+    <div class="button-group">
+      <button class="btn btn-2" onclick="mostrarInfo('2')">🎉 2° Ciclo</button>
+      <button class="btn btn-4" onclick="mostrarInfo('4')">4° Ciclo</button>
+      <button class="btn btn-6" onclick="mostrarInfo('6')">6° Ciclo</button>
+      <button class="btn btn-egresado" onclick="mostrarInfo('egresado')">👨‍🎓 Egresado</button>
+    </div>
+
+    <div id="info" class="info-box"></div>
   </div>
 
-  <div id="contenido" class="content"></div>
-
   <script>
-    const contenido = document.getElementById("contenido");
+    function mostrarInfo(ciclo) {
+      const info = document.getElementById("info");
+      let contenido = "";
+      info.className = "info-box";
 
-    const data = {
-      ciclo2: `
-        <div class="title">🧾 Requisitos para 2° Ciclo:</div>
-        <ul>
-          <li>Realizar prácticas del ciclo y cumplir con las horas requeridas.</li>
-          <li>Presentar el informe (Kit de prácticas: <strong>S/ 30.00</strong>).</li>
-          <li>Tener la nota publicada en el curso de ESRT.</li>
-          <li>Ficha de seguimiento: <strong>S/ 5.00</strong></li>
-          <li>Trámite modular dentro del ciclo: <strong>S/ 40.00</strong></li>
-          <li>Foto tamaño pasaporte (mate).</li>
-          <li>Formulario Único de Trámite (FUT).</li>
-          <li>Presentar todo en mica.</li>
-        </ul>
-        <div class="promo">🎁 ¡Promoción especial para alumnos del 2° ciclo! Consulta en Secretaría Académica.</div>
-        <p><strong>⏳ Tiempo de entrega:</strong> 10 días hábiles.</p>
-      `,
-      ciclo4: `
-        <div class="title">📘 Requisitos para 4° Ciclo:</div>
-        <ul>
-          <li>Realizar prácticas y cumplir con las horas requeridas.</li>
-          <li>Presentar el informe (Kit de prácticas: <strong>S/ 30.00</strong>).</li>
-          <li>Nota publicada en el curso ESRT.</li>
-          <li>Ficha de seguimiento: <strong>S/ 5.00</strong></li>
-          <li>Trámite modular dentro del ciclo: <strong>S/ 40.00</strong></li>
-          <li>Fotografía tamaño pasaporte (mate).</li>
-          <li>Formulario Único de Trámite (FUT).</li>
-          <li>Presentar todo en mica.</li>
-        </ul>
-        <p><strong>⏳ Tiempo de entrega:</strong> 10 días hábiles.</p>
-      `,
-      ciclo6: `
-        <div class="title">📗 Requisitos para 6° Ciclo:</div>
-        <ul>
-          <li>Finalizar todas las prácticas del programa.</li>
-          <li>Presentar el informe final (Kit de prácticas: <strong>S/ 30.00</strong>).</li>
-          <li>Nota publicada en ESRT.</li>
-          <li>Ficha de seguimiento: <strong>S/ 5.00</strong></li>
-          <li>Trámite modular dentro del ciclo: <strong>S/ 40.00</strong></li>
-          <li>Foto tamaño pasaporte (mate).</li>
-          <li>Formulario Único de Trámite (FUT).</li>
-          <li>Presentar todo en mica.</li>
-        </ul>
-        <p><strong>⏳ Tiempo de entrega:</strong> 10 días hábiles.</p>
-      `,
-      egresado: `
-        <div class="title">🎓 Requisitos para Egresados:</div>
-        <ul>
-          <li>Haber culminado todos los ciclos y prácticas.</li>
-          <li>Informe completo (Kit de prácticas: <strong>S/ 30.00</strong>).</li>
-          <li>Nota publicada en ESRT.</li>
-          <li>Ficha de seguimiento: <strong>S/ 20.00</strong></li>
-          <li>Trámite modular como egresado: <strong>S/ 100.00</strong></li>
-          <li>Fotografía tamaño pasaporte (mate).</li>
-          <li>Formulario Único de Trámite (FUT).</li>
-          <li>Presentar todo en mica.</li>
-        </ul>
-        <p><strong>⏳ Tiempo de entrega:</strong> 10 días hábiles.</p>
-      `
-    };
+      if (ciclo === "2") {
+        info.classList.add("bg-2");
+        contenido = `
+          <h3>✅ Requisitos para el Certificado Modular – 2° Ciclo</h3>
+          <ul>
+            <li>📌 Haber realizado tus prácticas del 2° ciclo y cumplir con las horas requeridas.</li>
+            <li>📄 Presentar tu informe de prácticas (Kit: S/ 30.00) con toda la documentación completa.</li>
+            <li>📝 Tener la nota publicada en el curso de ESRT (Experiencias Formativas en Situaciones Reales de Trabajo).</li>
+          </ul>
+          <h4>💰 Costos:</h4>
+          <ul>
+            <li>Ficha de seguimiento: S/ 5.00</li>
+            <li>Trámite modular (alumno regular): S/ 40.00</li>
+            <li>Fotografía tamaño pasaporte papel mate</li>
+            <li>Formulario Único de Trámite (FUT)</li>
+            <li>📂 Todos los documentos en una mica</li>
+          </ul>
+          <p>⏳ <strong>Tiempo de entrega:</strong> 10 días hábiles.</p>
+          <p style="color: #15803d; font-weight: bold;">🎉 ¡Promoción especial para el 2° ciclo! Consulta en el área correspondiente para más detalles.</p>
+        `;
+      } else if (ciclo === "4") {
+        info.classList.add("bg-4");
+        contenido = `
+          <h3>✅ Requisitos para el Certificado Modular – 4° Ciclo</h3>
+          <ul>
+            <li>📌 Haber culminado las prácticas del 4° ciclo y cumplir con las horas necesarias.</li>
+            <li>📄 Presentar el informe de prácticas (Kit: S/ 30.00) completo.</li>
+            <li>📝 Nota publicada en el curso ESRT.</li>
+          </ul>
+          <h4>💰 Costos:</h4>
+          <ul>
+            <li>Ficha de seguimiento: S/ 5.00</li>
+            <li>Trámite modular: S/ 40.00 (si es alumno regular)</li>
+            <li>Fotografía tamaño pasaporte papel mate</li>
+            <li>Formulario FUT + mica</li>
+          </ul>
+          <p>⏳ <strong>Tiempo de entrega:</strong> 10 días hábiles.</p>
+        `;
+      } else if (ciclo === "6") {
+        info.classList.add("bg-6");
+        contenido = `
+          <h3>✅ Requisitos para el Certificado Modular – 6° Ciclo</h3>
+          <ul>
+            <li>📌 Haber culminado tus prácticas del 6° ciclo.</li>
+            <li>📄 Informe de prácticas completo (Kit: S/ 30.00).</li>
+            <li>📝 Nota publicada en el curso de ESRT.</li>
+          </ul>
+          <h4>💰 Costos:</h4>
+          <ul>
+            <li>Ficha de seguimiento: S/ 5.00</li>
+            <li>Trámite modular: S/ 40.00</li>
+            <li>Fotografía tamaño pasaporte</li>
+            <li>Formulario FUT y mica</li>
+          </ul>
+          <p>⏳ <strong>Tiempo de entrega:</strong> 10 días hábiles.</p>
+        `;
+      } else if (ciclo === "egresado") {
+        info.classList.add("bg-egresado");
+        contenido = `
+          <h3>📘 Requisitos para el Certificado Modular – Egresados</h3>
+          <ul>
+            <li>✅ Haber realizado todas las prácticas en 2°, 4° y 6° ciclo.</li>
+            <li>📄 Presentar los informes completos (Kit: S/ 30.00 por ciclo).</li>
+            <li>📝 Notas publicadas en todos los cursos de ESRT.</li>
+          </ul>
+          <h4>💰 Costos:</h4>
+          <ul>
+            <li>Ficha de seguimiento: S/ 20.00</li>
+            <li>Trámite modular: S/ 100.00</li>
+            <li>Fotografía tamaño pasaporte</li>
+            <li>Formulario FUT y mica</li>
+          </ul>
+          <p>⏳ <strong>Tiempo de entrega:</strong> 10 días hábiles.</p>
+          <p style="color: #b45309;">👨‍🎓 Si ya culminaste todos tus ciclos y prácticas, este es tu trámite final para certificar tu formación modular.</p>
+        `;
+      }
 
-    function mostrarContenido(ciclo) {
-      contenido.innerHTML = data[ciclo];
-      contenido.classList.add("visible");
-
-      // Cambiar fondo del contenido según el ciclo
-      const fondo = {
-        ciclo2: '#f0fff4',
-        ciclo4: '#ebf8ff',
-        ciclo6: '#fffaf0',
-        egresado: '#fff5f7'
-      };
-      contenido.style.backgroundColor = fondo[ciclo];
+      info.innerHTML = contenido;
     }
   </script>
 </body>
